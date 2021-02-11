@@ -42,9 +42,10 @@ def parse_homework_status(homework):
 
 
 def get_homework_statuses(current_timestamp):
-    headers = {'Authorization': 'OAuth ' + PRAKTIKUM_TOKEN}
+    headers = {'Authorization': f'OAuth {PRAKTIKUM_TOKEN}'}
     params = {'from_date': current_timestamp}
-    homework_statuses = requests.get(API_URL, headers=headers, params=params)
+    homework_statuses = requests.get(API_URL+API_METHODS['homework'],
+                                     headers=headers, params=params)
     return homework_statuses.json()
 
 
@@ -64,6 +65,7 @@ def main():
                     parse_homework_status(new_homework.get('homeworks')[0]),
                     bot
                 )
+                logging.info('Отправлено сообщение')
             current_timestamp = new_homework.get('current_date')
             time.sleep(300)
         except Exception as e:
