@@ -57,6 +57,8 @@ def get_homework_statuses(current_timestamp):
         homework_statuses = requests.get(f'{API_URL}{API_METHODS["homework"]}',
                                          headers=headers, params=params,
                                          timeout=REQUEST_TIMEOUT)
+    except requests.HTTPError as e:
+        logging.error(e, exc_info=True)
     except requests.ConnectionError as e:
         logging.error(e, exc_info=True)
     except requests.Timeout as e:
